@@ -8,9 +8,8 @@ module.exports = store = {
     });
   },
   create: async (req, res) => {
-    const store = new Store(req.body);
-    await store.save();
-
-    res.redirect('/');
+    const store = await (new Store(req.body)).save();
+    req.flash('success', `Succuessfully added ${store.name}, would you like to leave a review?`);
+    res.redirect(`store/${store.slug}`);
   }
 };
