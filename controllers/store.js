@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 
 module.exports = store = {
+  index: async (req, res) => {
+    const stores = await (Store.find());
+
+    res.render("stores", { title: "Stores", stores });
+  },
   add: (req, res) => {
     res.render("editStore", {
       title: "Add Store"

@@ -46,7 +46,7 @@ html
                 .flash(class=`flash--${category}`)
                   p.flash__text!= message
                   button.flash__remove(onClick="this.parentElement.remove()") &times;
-    .content
+    .content(style='padding: 0rem 2rem;')
       block content
 
     block scripts
