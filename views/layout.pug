@@ -39,7 +39,7 @@ html
     block messages
       if locals.flashes
         .inner
-          .flash-messages
+          .flash-messages(style='padding-top: 2.5rem;')
             - const categories = Object.keys(locals.flashes)
             each category in categories
               each message in flashes[category]
