@@ -7,7 +7,6 @@ const controllers = require("../controllers");
 const { catchErrors } = require('../handlers/errorHandlers')
 
 router.get("/", catchErrors(controllers.store.index));
-
 router.get("/stores", catchErrors(controllers.store.index));
 router.get('/stores/:slug', catchErrors(controllers.store.show));
 router.get('/stores/:id/edit', catchErrors(controllers.store.edit))
@@ -23,5 +22,8 @@ router.post("/add/:id",
   catchErrors(middlewares.photo.resize),
   catchErrors(controllers.store.update)
 );
+
+router.get("/tags", controllers.tag.get);
+router.get("/tags/:tag", controllers.tag.get);
 
 module.exports = router;
