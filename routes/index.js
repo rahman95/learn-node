@@ -13,13 +13,13 @@ router.get('/stores/:id/edit', catchErrors(controllers.store.edit))
 
 router.get("/add", controllers.store.add);
 router.post("/add",
-  controllers.store.upload,
-  catchErrors(controllers.store.resize),
+  middlewares.photo.upload,
+  catchErrors(middlewares.photo.resize),
   catchErrors(controllers.store.create)
 );
 router.post("/add/:id",
-  controllers.store.upload,
-  catchErrors(controllers.store.resize),
+  middlewares.photo.upload,
+  catchErrors(middlewares.photo.resize),
   catchErrors(controllers.store.update)
 );
 
