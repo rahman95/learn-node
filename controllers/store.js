@@ -30,7 +30,7 @@ module.exports = store = {
       "success",
       `Succuessfully added ${store.name}, would you like to leave a review?`
     );
-    res.redirect(`store/${store.slug}`);
+    res.redirect(`stores/${store.slug}`);
   },
 
   edit: async (req, res) => {
