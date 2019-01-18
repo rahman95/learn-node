@@ -31,6 +31,7 @@ const storeSchema = new mongoose.Schema({
       required: "Address is required"
     }
   },
+  photo: String,
   created: {
     type: Date,
     default: Date.now
