@@ -26,4 +26,6 @@ router.post("/add/:id",
 router.get("/tags", controllers.tag.get);
 router.get("/tags/:tag", controllers.tag.get);
 
+router.get('/login', controllers.user.loginForm);
+
 module.exports = router;
