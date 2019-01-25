@@ -27,7 +27,12 @@ router.get("/tags", controllers.tag.get);
 router.get("/tags/:tag", controllers.tag.get);
 
 router.get("/register", controllers.user.registerForm);
-router.post("/register", middlewares.auth.validateRegister);
+router.post(
+  "/register",
+  middlewares.auth.validateRegister,
+  controllers.user.register,
+  controllers.auth.login
+);
 
 router.get('/login', controllers.user.loginForm);
 router.post("/login", controllers.user.login);
