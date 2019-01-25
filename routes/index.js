@@ -41,4 +41,11 @@ router.post("/login", controllers.auth.login);
 
 router.get("/logout", controllers.auth.logout);
 
+
+router.get('/account',
+  controllers.auth.isLoggedIn,
+  controllers.user.account
+);
+router.post("/account", catchErrors(controllers.user.update));
+
 module.exports = router;

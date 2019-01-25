@@ -12,7 +12,7 @@ module.exports = user = {
       email: req.body.email,
       name: req.body.name
     });
-    const register = promisify(User.register, User)
+    const register = promisify(User.register, User);
     await register(user, req.body.password);
 
     next();
@@ -22,7 +22,27 @@ module.exports = user = {
     res.render("auth/login", { title: "Login" });
   },
 
-  login: async (req, res) => {
-    res.render("auth/login", { title: "Login" });
+  account: async (req, res) => {
+    res.render("auth/account", { title: "Edit Account" });
+  },
+
+  update: async (req, res) => {
+    const updates = {
+      name: req.body.name,
+      email: req.body.email
+    }
+
+    const user = await User.findOneAndUpdate({
+      _id: req.user._id
+    }, {
+      $set: updates
+    }, {
+      new: true,
+      runValidators: true,
+      context: 'query'
+    })
+
+    req.flash('success', 'Successfully updated account');
+    res.redirect('/account');
   }
 };
