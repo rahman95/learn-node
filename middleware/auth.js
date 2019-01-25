@@ -16,6 +16,9 @@ module.exports = auth = {
     if (errors) {
       req.flash("error", errors.map(err => err.msg));
       res.render('auth/register', {title: 'Register', body: req.body, flashes: req.flash() } )
+      return;
     }
+
+    next();
   }
 };
