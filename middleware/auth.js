@@ -1,3 +1,6 @@
+const mongoose = require('mongoose');
+const User = mongoose.model("User");
+
 module.exports = auth = {
   validateRegister: async (req, res, next) => {
     req.sanitizeBody("name");
@@ -20,5 +23,25 @@ module.exports = auth = {
     }
 
     next();
+  },
+  checkResetToken: async(req, res, next) => {
+    const user = await User.findOne({
+      resetPasswordToken: req.params.token,
+      resetPasswordExpires: { $gt: Date.now() }
+    });
+    if (!user) {
+      req.flash('error', 'Password reset token is invalid or has expired');
+      return res.redirect('/login');
+    }
+
+    return next();
+  },
+  confirmedPasswords: async (req, res, next) => {
+    if(req.body.password === req.body['password-confirm']){
+      return next();
+    }
+
+    req.flash('error', 'Passwords do not match');
+    res.redirect('back');
   }
 };

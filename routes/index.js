@@ -48,4 +48,16 @@ router.get('/account',
 );
 router.post("/account", catchErrors(controllers.user.update));
 
+router.post("/account/forgot", catchErrors(controllers.auth.forgotPassword))
+router.get("/account/reset/:token",
+  middlewares.auth.checkResetToken,
+  catchErrors(controllers.auth.resetPassword)
+)
+router.post("/account/reset/:token",
+  middlewares.auth.checkResetToken,
+  middlewares.auth.confirmedPasswords,
+  catchErrors(controllers.auth.updatePassword)
+)
+
+
 module.exports = router;
