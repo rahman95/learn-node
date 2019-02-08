@@ -41,12 +41,12 @@ module.exports = auth = {
     await user.save();
 
     //Send reset token
-    const resetUrl = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`
+    const resetURL = `http://${req.headers.host}/account/reset/${user.resetPasswordToken}`
     await mailer.send({
       user,
       subject: 'Password Reset',
       filename: 'password-reset',
-      resetUrl
+      resetURL
     });
 
     req.flash('success', 'A password reset link has been mailed to you')
