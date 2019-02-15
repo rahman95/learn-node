@@ -9,7 +9,7 @@ module.exports = store = {
   },
 
   show: async (req, res, next) => {
-    const store = await Store.findOne({ slug: req.params.slug });
+    const store = await Store.findOne({ slug: req.params.slug }).populate('author');
     if (!store) return next();
 
     res.render("show", {
@@ -25,16 +25,21 @@ module.exports = store = {
   },
 
   create: async (req, res) => {
+    req.body.author = req.user._id;
     const store = await new Store(req.body).save();
     req.flash(
       "success",
       `Succuessfully added ${store.name}, would you like to leave a review?`
     );
-    res.redirect(`stores/${store.slug}`);
+    res.redirect(`/stores/${store.slug}`);
   },
 
   edit: async (req, res) => {
     const store = await Store.findById(req.params.id);
+    if(! store.author._id.equals(req.user._id)){
+      req.flash('error', 'Only the owner can edit the Store')
+      res.redirect('back');
+    }
 
     res.render("editStore", {
       title: `Edit ${store.name}`,

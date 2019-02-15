@@ -35,6 +35,11 @@ const storeSchema = new mongoose.Schema({
   created: {
     type: Date,
     default: Date.now
+  },
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'Author is required'
   }
 });
 
