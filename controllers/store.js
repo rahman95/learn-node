@@ -62,5 +62,18 @@ module.exports = store = {
       }">View Store →</a>`
     );
     res.redirect(`/stores/${store._id}/edit`);
+  },
+
+  search: async (req, res) => {
+    const query = req.query.q;
+    const stores = await Store.find({
+      $text: { $search: query }
+    }, {
+      score: { $meta: 'textScore' }
+    }).sort({
+      score: { $meta: 'textScore' }
+    }).limit(5);
+
+    res.json(stores);
   }
 };
