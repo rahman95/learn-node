@@ -75,5 +75,23 @@ module.exports = store = {
     }).limit(5);
 
     res.json(stores);
+  },
+
+  findNear: async(req, res) => {
+    const coordinates = [req.query.lng, req.query.lat].map(parseFloat);
+    const query = {
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates
+          },
+          // $maxDistance: 10000 //10km
+        }
+      }
+    };
+    const stores = await Store.find(query, 'slug, name description location').limit(10);
+
+    res.json(stores);
   }
 };
