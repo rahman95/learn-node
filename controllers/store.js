@@ -86,11 +86,11 @@ module.exports = store = {
             type: 'Point',
             coordinates
           },
-          // $maxDistance: 10000 //10km
+          $maxDistance: 10000 //10km
         }
       }
     };
-    const stores = await Store.find(query, 'slug, name description location').limit(10);
+    const stores = await Store.find(query, 'slug name description location photo').limit(10);
 
     res.json(stores);
   }

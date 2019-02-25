@@ -6,6 +6,7 @@ const controllers = require("../controllers");
 
 const { catchErrors } = require('../handlers/errorHandlers')
 
+//Stores
 router.get("/", catchErrors(controllers.store.index));
 router.get("/stores", catchErrors(controllers.store.index));
 router.get('/stores/:slug', catchErrors(controllers.store.show));
@@ -26,28 +27,28 @@ router.post("/add/:id",
   catchErrors(controllers.store.update)
 );
 
+//Tags
 router.get("/tags", controllers.tag.get);
 router.get("/tags/:tag", controllers.tag.get);
 
+//Map
+router.get("/map", controllers.map.index);
+
+//Auth
 router.get("/register", controllers.user.registerForm);
 router.post("/register",
   middlewares.auth.validateRegister,
   controllers.user.register,
   controllers.auth.login
 );
-
 router.get('/login', controllers.user.loginForm);
 router.post("/login", controllers.auth.login);
-
 router.get("/logout", controllers.auth.logout);
-
-
 router.get('/account',
   controllers.auth.isLoggedIn,
   controllers.user.account
 );
 router.post("/account", catchErrors(controllers.user.update));
-
 router.post("/account/forgot", catchErrors(controllers.auth.forgotPassword))
 router.get("/account/reset/:token",
   middlewares.auth.checkResetToken,
