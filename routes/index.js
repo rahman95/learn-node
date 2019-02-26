@@ -63,6 +63,7 @@ router.post("/account/reset/:token",
 //API
 router.get('/api/search', catchErrors(controllers.store.search));
 router.get('/api/stores/near', catchErrors(controllers.store.findNear));
-
+router.get('/api/stores/near', catchErrors(controllers.store.findNear));
+router.post('/api/stores/:id/heart', catchErrors(controllers.store.favourite))
 
 module.exports = router;
