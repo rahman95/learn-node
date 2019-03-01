@@ -27,6 +27,12 @@ router.post("/add/:id",
   catchErrors(controllers.store.update)
 );
 
+//Favourites
+router.get("/hearts",
+  controllers.auth.isLoggedIn,
+  catchErrors(controllers.store.getFavourites)
+)
+
 //Tags
 router.get("/tags", controllers.tag.get);
 router.get("/tags/:tag", controllers.tag.get);
