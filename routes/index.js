@@ -27,6 +27,12 @@ router.post("/add/:id",
   catchErrors(controllers.store.update)
 );
 
+//Reviews
+router.post("/reviews/:id",
+  controllers.auth.isLoggedIn,
+  catchErrors(controllers.review.submit)
+);
+
 //Favourites
 router.get("/hearts",
   controllers.auth.isLoggedIn,
