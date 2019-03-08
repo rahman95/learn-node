@@ -46,6 +46,9 @@ router.get("/tags/:tag", controllers.tag.get);
 //Map
 router.get("/map", controllers.map.index);
 
+//Top
+router.get("/top", catchErrors(controllers.store.topStores));
+
 //Auth
 router.get("/register", controllers.user.registerForm);
 router.post("/register",
