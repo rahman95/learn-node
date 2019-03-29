@@ -1,0 +1,13 @@
+mixin pagination(current, pages, total)
+  .pagination
+    .pagination__prev
+      if current > 1
+        a(href=`/stores?page=${ current - 1 }`) Prev
+
+    .pagination__text
+      p Page #{current} of #{pages} -
+        i (#{total} total results)
+
+    .pagination__next
+      if current < pages
+        a(href=`/stores?page=${ parseFloat(current) + 1 }`) Next

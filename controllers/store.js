@@ -2,11 +2,34 @@ const mongoose = require('mongoose');
 const Store = mongoose.model('Store');
 const User = mongoose.model('User');
 
+const PAGINATION_SIZE = 4;
+
 module.exports = store = {
   index: async (req, res) => {
-    const stores = await Store.find();
+    const current = req.query.page ? (req.query.page > 1 ? req.query.page : 1) : 1;
+    const getTotal = Store.count();
+    const getStores = Store.find()
+      .limit(PAGINATION_SIZE)
+      .skip(PAGINATION_SIZE * (current - 1))
+      .sort({
+        name: "asc"
+      });
 
-    res.render("stores", { title: "Stores", stores });
+    const [total, stores] = await Promise.all([getTotal, getStores]);
+    const pages = Math.ceil(total / PAGINATION_SIZE);
+
+    //If they requested for a page that doesnt exist, throw them to last page
+    if(current > pages) {
+      res.redirect(`/stores/?page=${pages}`);
+    }
+
+    res.render("stores", {
+      title: "Stores",
+      current,
+      pages,
+      total,
+      stores
+    });
   },
 
   show: async (req, res, next) => {
